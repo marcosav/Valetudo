@@ -101,7 +101,7 @@ class GithubValetudoUpdateProvider extends ValetudoUpdateProvider {
 
 GithubValetudoUpdateProvider.TYPE = "github";
 
-GithubValetudoUpdateProvider.RELEASES_URL = "https://api.github.com/repos/Hypfer/Valetudo/releases";
+GithubValetudoUpdateProvider.RELEASES_URL = "https://api.github.com/repos/marcosav/Valetudo/releases";
 GithubValetudoUpdateProvider.MANIFEST_NAME = "valetudo_release_manifest.json";
 
 

@@ -17,3 +17,6 @@ build/
 
 /docs/vendor
 /docs/_site
+
+# macOS files
+.DS_Store

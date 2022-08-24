@@ -81,8 +81,8 @@ class GithubValetudoNightlyUpdateProvider extends ValetudoUpdateProvider {
 
 GithubValetudoNightlyUpdateProvider.TYPE = "github_nightly";
 
-GithubValetudoNightlyUpdateProvider.REPO_URL = "https://api.github.com/repos/Hypfer/valetudo-nightly-builds/branches/master";
-GithubValetudoNightlyUpdateProvider.ASSET_BASE_URL = "https://raw.githubusercontent.com/Hypfer/valetudo-nightly-builds/master/";
+GithubValetudoNightlyUpdateProvider.REPO_URL = "https://api.github.com/repos/marcosav/valetudo-nightly-builds/branches/master";
+GithubValetudoNightlyUpdateProvider.ASSET_BASE_URL = "https://raw.githubusercontent.com/marcosav/valetudo-nightly-builds/master/";
 GithubValetudoNightlyUpdateProvider.MANIFEST_NAME = "valetudo_release_manifest.json";
 
 GithubValetudoNightlyUpdateProvider.BINARY_NAMES = {

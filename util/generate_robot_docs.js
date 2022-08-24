@@ -229,7 +229,18 @@ const ModelDescriptions = {
             comment: "This model is actually just a White-Label Product with a custom Miio Software stack which is EOL and therefore doesn't receive any meaningful software updates.\n\nOverall, it's just weird and annoying.",
             architecture: VALETUDO_ARCHITECTURES.ARM,
         }
-    }
+    },
+    "Cecotec": {
+        "Conga": {
+            valetudoSupport: VALETUDO_SUPPORT_GRADES.GOOD,
+            developerSupport: DEVELOPER_SUPPORT_GRADES.BEST_EFFORT,
+            testedWorking: true,
+            recommended: BUY_GRADES.OKAY,
+            comment:
+                "This adaptation only supports Conga models that works with Conga 3000 retail app",
+            architecture: VALETUDO_ARCHITECTURES.ARM,
+        },
+    },
 }
 
 function getModelDescription(vendor, model) {
