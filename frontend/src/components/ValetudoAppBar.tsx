@@ -29,8 +29,6 @@ import {
     Power as PowerIcon,
     SystemUpdateAlt as UpdaterIcon,
     SettingsRemote as SettingsRemoteIcon,
-    GitHub as GithubIcon,
-    Favorite as DonateIcon,
     MenuBook as DocsIcon,
     DeveloperBoard as SystemInformationIcon,
     Info as AboutIcon,
@@ -41,7 +39,6 @@ import {Link, useRouteMatch} from "react-router-dom";
 import ValetudoEvents from "./ValetudoEvents";
 import {Capability} from "../api";
 import {useCapabilitiesSupported} from "../CapabilitiesProvider";
-import {SwaggerUIIcon} from "./CustomIcons";
 
 interface MenuEntry {
     kind: "MenuEntry";
