@@ -397,19 +397,6 @@ const ValetudoAppBar: React.FunctionComponent<{ paletteMode: PaletteMode, setPal
                     <ListItem
                         button
                         component="a"
-                        href="./swagger/"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        <ListItemIcon>
-                            <SwaggerUIIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary="Swagger UI"/>
-                    </ListItem>
-                    <Divider/>
-                    <ListItem
-                        button
-                        component="a"
                         href="https://valetudo.cloud"
                         target="_blank"
                         rel="noopener"
@@ -418,30 +405,6 @@ const ValetudoAppBar: React.FunctionComponent<{ paletteMode: PaletteMode, setPal
                             <DocsIcon/>
                         </ListItemIcon>
                         <ListItemText primary="Docs"/>
-                    </ListItem>
-                    <ListItem
-                        button
-                        component="a"
-                        href="https://github.com/Hypfer/Valetudo"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        <ListItemIcon>
-                            <GithubIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary="Hypfer/Valetudo"/>
-                    </ListItem>
-                    <ListItem
-                        button
-                        component="a"
-                        href="https://github.com/sponsors/Hypfer"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        <ListItemIcon>
-                            <DonateIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary="Donate"/>
                     </ListItem>
 
 
