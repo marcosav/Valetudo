@@ -1,5 +1,4 @@
 const basicAuth = require("express-basic-auth");
-const bodyParser = require("body-parser");
 const compression = require("compression");
 const dynamicMiddleware = require("express-dynamic-middleware");
 const express = require("express");
@@ -53,11 +52,11 @@ class WebServer {
 
         this.port = this.webserverConfig.port;
 
-        this.basicAuthInUse = false; //TODO: redo auth with jwt or something like that
+        this.basicAuthInUse = false; //TODO: redo auth
 
         this.app = express();
         this.app.use(compression());
-        this.app.use(bodyParser.json());
+        this.app.use(express.json());
 
         this.app.disable("x-powered-by");
 
