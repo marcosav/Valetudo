@@ -93,7 +93,7 @@ class WebServer {
 
         const server = http.createServer(this.app);
 
-        //this.loadApiSpec();
+        this.loadApiSpec();
         this.validator = function superBasicValidationMiddleware(req, res, next) {
             // We can save a lot of code in our routers by always at least making sure that req.body exists
             // even if it is not being validated by the schema

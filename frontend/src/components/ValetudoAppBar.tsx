@@ -39,6 +39,7 @@ import {Link, useRouteMatch} from "react-router-dom";
 import ValetudoEvents from "./ValetudoEvents";
 import {Capability} from "../api";
 import {useCapabilitiesSupported} from "../CapabilitiesProvider";
+import {SwaggerUIIcon} from "./CustomIcons";
 
 interface MenuEntry {
     kind: "MenuEntry";
@@ -391,6 +392,19 @@ const ValetudoAppBar: React.FunctionComponent<{ paletteMode: PaletteMode, setPal
                         sx={{background: "transparent"}}>
                         Links
                     </ListSubheader>
+                    <ListItem
+                        button
+                        component="a"
+                        href="./swagger/"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <ListItemIcon>
+                            <SwaggerUIIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Swagger UI"/>
+                    </ListItem>
+                    <Divider/>
                     <ListItem
                         button
                         component="a"
