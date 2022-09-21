@@ -44,7 +44,7 @@
                 "segment_ids": {
                   "type": "array",
                   "items": {
-                    "type": "string",
+                    "type": "integer",
                     "description": "Segment IDs to clean",
                     "minimum": 1
                   }
@@ -66,9 +66,9 @@
                 "value": {
                   "action": "start_segment_action",
                   "segment_ids": [
-                    "3",
-                    "2",
-                    "1"
+                    3,
+                    2,
+                    1
                   ],
                   "iterations": 1
                 }
@@ -78,9 +78,9 @@
                 "value": {
                   "action": "start_segment_action",
                   "segment_ids": [
-                    "3",
-                    "2",
-                    "1"
+                    3,
+                    2,
+                    1
                   ],
                   "iterations": 1,
                   "customOrder": true
@@ -91,9 +91,9 @@
                 "value": {
                   "action": "start_segment_action",
                   "segment_ids": [
-                    "3",
-                    "2",
-                    "1"
+                    3,
+                    2,
+                    1
                   ],
                   "iterations": 3,
                   "customOrder": true

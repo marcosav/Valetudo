@@ -21,10 +21,10 @@
                       ]
                     },
                     "segment_a_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "segment_b_id": {
-                      "type": "string"
+                      "type": "integer"
                     }
                   }
                 },
@@ -39,7 +39,7 @@
                       ]
                     },
                     "segment_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "pA": {
                       "$ref": "#/components/schemas/CoordinateDTO"
@@ -56,7 +56,7 @@
                 "description": "Split a segment along a line",
                 "value": {
                   "action": "split_segment",
-                  "segment_id": "1",
+                  "segment_id": 1,
                   "pA": {
                     "x": 3305,
                     "y": 2905
@@ -71,8 +71,8 @@
                 "description": "Join two segments",
                 "value": {
                   "action": "join_segments",
-                  "segment_a_id": "4",
-                  "segment_b_id": "5"
+                  "segment_a_id": 4,
+                  "segment_b_id": 5
                 }
               }
             }
