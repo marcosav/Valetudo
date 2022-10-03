@@ -240,6 +240,15 @@
                 }
               }
             }
+          },
+          "optionalExposedCapabilities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "SpeakerVolumeControlCapability"
+              ]
+            }
           }
         }
       },
