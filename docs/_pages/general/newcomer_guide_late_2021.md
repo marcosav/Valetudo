@@ -1,7 +1,7 @@
 ---
 title: Newcomer Guide Late 2021
-category: General
-order: 5
+category: Archive
+order: 9999
 ---
 
 # Valetudo Newcomer Guide Late 2021 Edition

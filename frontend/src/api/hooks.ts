@@ -92,6 +92,9 @@ import {
     fetchNetworkAdvertisementConfiguration,
     fetchNetworkAdvertisementProperties,
     sendNetworkAdvertisementConfiguration,
+    sendMopDockDryManualTriggerCommand,
+    sendMopDockCleanManualTriggerCommand,
+    MopDockCleanManualTriggerCommand, MopDockDryManualTriggerCommand, fetchWifiConfigurationProperties,
 } from "./client";
 import {
     PresetSelectionState,
@@ -160,6 +163,7 @@ enum CacheKey {
     AutoEmptyDockAutoEmpty = "auto_empty_dock_auto_empty",
     DoNotDisturb = "do_not_disturb",
     WifiStatus = "wifi_status",
+    WifiConfigurationProperties = "wifi_configuration_properties",
     ManualControl = "manual_control",
     ManualControlProperties = "manual_control_properties",
     CombinedVirtualRestrictionsProperties = "combined_virtual_restrictions_properties",
@@ -298,7 +302,7 @@ export function useRobotStatusQuery(select?: (status: StatusState) => any) {
 }
 
 export const usePresetSelectionsQuery = (
-    capability: Capability.FanSpeedControl | Capability.WaterUsageControl
+    capability: Capability.FanSpeedControl | Capability.WaterUsageControl | Capability.OperationModeControl
 ) => {
     return useQuery(
         [CacheKey.PresetSelections, capability],
@@ -315,9 +319,10 @@ export const capabilityToPresetType: Record<Parameters<typeof usePresetSelection
     PresetSelectionState["type"]> = {
         [Capability.FanSpeedControl]: "fan_speed",
         [Capability.WaterUsageControl]: "water_grade",
+        [Capability.OperationModeControl]: "operation_mode",
     };
 export const usePresetSelectionMutation = (
-    capability: Capability.FanSpeedControl | Capability.WaterUsageControl
+    capability: Capability.FanSpeedControl | Capability.WaterUsageControl | Capability.OperationModeControl
 ) => {
     const queryClient = useQueryClient();
     const onError = useOnCommandError(capability);
@@ -915,6 +920,12 @@ export const useWifiStatusQuery = () => {
     });
 };
 
+export const useWifiConfigurationPropertiesQuery = () => {
+    return useQuery(CacheKey.WifiConfigurationProperties, fetchWifiConfigurationProperties, {
+        staleTime: Infinity
+    });
+};
+
 export const useWifiConfigurationMutation = (
     options?: UseMutationOptions<void, unknown, WifiConfiguration>
 ) => {
@@ -1062,4 +1073,42 @@ export const useRobotPropertiesQuery = () => {
     return useQuery(CacheKey.RobotProperties, fetchRobotProperties, {
         staleTime: Infinity,
     });
+};
+
+export const useMopDockCleanManualTriggerMutation = () => {
+    const queryClient = useQueryClient();
+    const onError = useOnCommandError(Capability.MopDockCleanManualTrigger);
+
+    return useMutation(
+        (command: MopDockCleanManualTriggerCommand) => {
+            return sendMopDockCleanManualTriggerCommand(command).then(fetchStateAttributes);
+        },
+        {
+            onError,
+            onSuccess(data) {
+                queryClient.setQueryData<RobotAttribute[]>(CacheKey.Attributes, data, {
+                    updatedAt: Date.now(),
+                });
+            },
+        }
+    );
+};
+
+export const useMopDockDryManualTriggerMutation = () => {
+    const queryClient = useQueryClient();
+    const onError = useOnCommandError(Capability.MopDockDryManualTrigger);
+
+    return useMutation(
+        (command: MopDockDryManualTriggerCommand) => {
+            return sendMopDockDryManualTriggerCommand(command).then(fetchStateAttributes);
+        },
+        {
+            onError,
+            onSuccess(data) {
+                queryClient.setQueryData<RobotAttribute[]>(CacheKey.Attributes, data, {
+                    updatedAt: Date.now(),
+                });
+            },
+        }
+    );
 };

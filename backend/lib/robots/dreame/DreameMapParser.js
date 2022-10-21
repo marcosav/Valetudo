@@ -228,6 +228,27 @@ class DreameMapParser {
                 }
             }
 
+            /*
+                TODO RESEARCH
+                 
+                There can be an spoint object. No idea what that does
+                There can also be multiple tpoint points. No idea when or why that happens or what it does either
+             */
+            if (additionalData.pointinfo && Array.isArray(additionalData.pointinfo.tpoint) && additionalData.pointinfo.tpoint.length === 1) {
+                const goToPoint = DreameMapParser.CONVERT_TO_VALETUDO_COORDINATES(
+                    additionalData.pointinfo.tpoint[0][0],
+                    additionalData.pointinfo.tpoint[0][1],
+                );
+
+                entities.push(new Map.PointMapEntity({
+                    points: [
+                        goToPoint.x,
+                        goToPoint.y,
+                    ],
+                    type: Map.PointMapEntity.TYPE.GO_TO_TARGET
+                }));
+            }
+
             if (additionalData.suw > 0) {
                 /*
                     6 = New Map in Single-map
@@ -358,13 +379,18 @@ class DreameMapParser {
                 } else if (type === MAP_DATA_TYPES.RISM) {
                     /**
                      * A rism Pixel is one byte consisting of
-                     *      1                  0000000
-                     *      isWall flag       The Segment ID
+                     *      1            1                000000
+                     *      isWall flag  isCarpet flag    The Segment ID
                      */
                     const px = buf[(i * parsedHeader.width) + j];
 
-                    const segmentId = px & 0b01111111;
+                    const segmentId = px & 0b00111111;
                     const wallFlag = px >> 7;
+
+                    /*
+                        TODO: figure out what to do with the carpet information
+                        px >> 6 & 0b00000001
+                    */
 
                     if (wallFlag) {
                         wallPixels.push(coords);
@@ -433,7 +459,11 @@ class DreameMapParser {
         let match;
 
         while ((match = PATH_REGEX.exec(traceString)) !== null) {
-            if (match.groups.operator === PATH_OPERATORS.START) {
+            if (
+                match.groups.operator === PATH_OPERATORS.START ||
+                match.groups.operator === PATH_OPERATORS.MOP_START ||
+                match.groups.operator === PATH_OPERATORS.DUAL_START
+            ) {
                 currentUnprocessedPath = [];
                 unprocessedPaths.push(currentUnprocessedPath);
 
@@ -561,9 +591,11 @@ const FRAME_TYPES = Object.freeze({
     P: 80
 });
 
-const PATH_REGEX = /(?<operator>[SL])(?<x>-?\d+),(?<y>-?\d+)/g;
+const PATH_REGEX = /(?<operator>[SMWL])(?<x>-?\d+),(?<y>-?\d+)/g;
 const PATH_OPERATORS = {
     START: "S",
+    MOP_START: "M",
+    DUAL_START: "W",
     RELATIVE_LINE: "L"
 };
 

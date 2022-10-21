@@ -96,6 +96,15 @@ class DreameZ10ProValetudoRobot extends DreameGen2LidarValetudoRobot {
             aiid: DreameGen2ValetudoRobot.MIOT_SERVICES.AUTO_EMPTY_DOCK.ACTIONS.EMPTY_DUSTBIN.AIID
         }));
 
+        this.registerCapability(new capabilities.DreameOperationModeControlCapability({
+            robot: this,
+            presets: Object.keys(this.operationModes).map(k => {
+                return new ValetudoSelectionPreset({name: k, value: this.operationModes[k]});
+            }),
+            siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
+            piid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.MOP_DOCK_SETTINGS.PIID
+        }));
+
         this.registerCapability(new QuirksCapability({
             robot: this,
             quirks: [
@@ -106,12 +115,27 @@ class DreameZ10ProValetudoRobot extends DreameGen2LidarValetudoRobot {
             ]
         }));
 
+        this.state.upsertFirstMatchingAttribute(new entities.state.attributes.DockStatusStateAttribute({
+            value: entities.state.attributes.DockStatusStateAttribute.VALUE.IDLE
+        }));
+
         this.state.upsertFirstMatchingAttribute(new entities.state.attributes.AttachmentStateAttribute({
             type: entities.state.attributes.AttachmentStateAttribute.TYPE.WATERTANK,
             attached: false
         }));
     }
 
+    getStatePropertiesToPoll() {
+        const superProps = super.getStatePropertiesToPoll();
+
+        return [
+            ...superProps,
+            {
+                siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
+                piid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.MOP_DOCK_SETTINGS.PIID
+            }
+        ];
+    }
 
     getModelName() {
         return "Z10 Pro";

@@ -48,7 +48,7 @@ import {
     ValetudoVersion,
     VoicePackManagementCommand,
     VoicePackManagementStatus,
-    WifiConfiguration,
+    WifiConfiguration, WifiConfigurationProperties,
     WifiProvisioningEncryptionKey,
     WifiStatus,
     Zone,
@@ -186,7 +186,7 @@ export const subscribeToStateAttributes = (
 };
 
 export const fetchPresetSelections = async (
-    capability: Capability.FanSpeedControl | Capability.WaterUsageControl
+    capability: Capability.FanSpeedControl | Capability.WaterUsageControl | Capability.OperationModeControl
 ): Promise<PresetSelectionState["value"][]> => {
     return valetudoAPI
         .get<PresetSelectionState["value"][]>(
@@ -198,7 +198,7 @@ export const fetchPresetSelections = async (
 };
 
 export const updatePresetSelection = async (
-    capability: Capability.FanSpeedControl | Capability.WaterUsageControl,
+    capability: Capability.FanSpeedControl | Capability.WaterUsageControl | Capability.OperationModeControl,
     level: PresetSelectionState["value"]
 ): Promise<void> => {
     await valetudoAPI.put(`/robot/capabilities/${capability}/preset`, {
@@ -746,6 +746,15 @@ export const fetchWifiStatus = async (): Promise<WifiStatus> => {
         });
 };
 
+export const fetchWifiConfigurationProperties = async (): Promise<WifiConfigurationProperties> => {
+    return valetudoAPI
+        .get<WifiConfigurationProperties>(`/robot/capabilities/${Capability.WifiConfiguration}/properties`)
+        .then(({ data }) => {
+            return data;
+        });
+};
+
+
 export const sendWifiConfiguration = async (configuration: WifiConfiguration): Promise<void> => {
     const encryptionKey = await fetchWifiProvisioningEncryptionKey();
 
@@ -898,4 +907,28 @@ export const fetchRobotProperties = async (): Promise<RobotProperties> => {
         .then(({ data }) => {
             return data;
         });
+};
+
+export type MopDockCleanManualTriggerCommand = "start" | "stop";
+export const sendMopDockCleanManualTriggerCommand = async (
+    command: MopDockCleanManualTriggerCommand
+): Promise<void> => {
+    await valetudoAPI.put(
+        `/robot/capabilities/${Capability.MopDockCleanManualTrigger}`,
+        {
+            action: command,
+        }
+    );
+};
+
+export type MopDockDryManualTriggerCommand = "start" | "stop";
+export const sendMopDockDryManualTriggerCommand = async (
+    command: MopDockDryManualTriggerCommand
+): Promise<void> => {
+    await valetudoAPI.put(
+        `/robot/capabilities/${Capability.MopDockDryManualTrigger}`,
+        {
+            action: command,
+        }
+    );
 };

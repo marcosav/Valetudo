@@ -20,6 +20,9 @@ export enum Capability {
     MapSegmentation = "MapSegmentationCapability",
     MapSnapshot = "MapSnapshotCapability",
     MappingPass = "MappingPassCapability",
+    MopDockCleanManualTrigger = "MopDockCleanManualTriggerCapability",
+    MopDockDryManualTrigger = "MopDockDryManualTriggerCapability",
+    OperationModeControl = "OperationModeControlCapability",
     PersistentMapControl = "PersistentMapControlCapability",
     SpeakerTest = "SpeakerTestCapability",
     SpeakerVolumeControl = "SpeakerVolumeControlCapability",
@@ -382,6 +385,10 @@ export interface WifiStatus {
         ips?: string[];
         frequency?: "2.4ghz" | "5ghz";
     };
+}
+
+export interface WifiConfigurationProperties {
+    provisionedReconfigurationSupported: boolean;
 }
 
 export interface WifiProvisioningEncryptionKey {

@@ -54,6 +54,7 @@ const CAPABILITY_TYPE_TO_ROUTER_MAPPING = {
     [capabilities.BasicControlCapability.TYPE]: capabilityRouters.BasicControlCapabilityRouter,
     [capabilities.FanSpeedControlCapability.TYPE]: capabilityRouters.PresetSelectionCapabilityRouter,
     [capabilities.WaterUsageControlCapability.TYPE]: capabilityRouters.PresetSelectionCapabilityRouter,
+    [capabilities.OperationModeControlCapability.TYPE]: capabilityRouters.PresetSelectionCapabilityRouter,
     [capabilities.ConsumableMonitoringCapability.TYPE]: capabilityRouters.ConsumableMonitoringCapabilityRouter,
     [capabilities.ZoneCleaningCapability.TYPE]: capabilityRouters.ZoneCleaningCapabilityRouter,
     [capabilities.GoToLocationCapability.TYPE]: capabilityRouters.GoToLocationCapabilityRouter,
@@ -80,7 +81,9 @@ const CAPABILITY_TYPE_TO_ROUTER_MAPPING = {
     [capabilities.TotalStatisticsCapability.TYPE]: capabilityRouters.StatisticsCapabilityRouter,
     [capabilities.CurrentStatisticsCapability.TYPE]: capabilityRouters.StatisticsCapabilityRouter,
     [capabilities.QuirksCapability.TYPE]: capabilityRouters.QuirksCapabilityRouter,
-    [capabilities.WifiScanCapability.TYPE]: capabilityRouters.WifiScanCapabilityRouter
+    [capabilities.WifiScanCapability.TYPE]: capabilityRouters.WifiScanCapabilityRouter,
+    [capabilities.MopDockCleanManualTriggerCapability.TYPE]: capabilityRouters.MopDockCleanManualTriggerCapabilityRouter,
+    [capabilities.MopDockDryManualTriggerCapability.TYPE]: capabilityRouters.MopDockDryManualTriggerCapabilityRouter,
 };
 
 module.exports = CapabilitiesRouter;

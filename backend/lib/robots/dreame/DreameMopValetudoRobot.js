@@ -86,6 +86,36 @@ class DreameMopValetudoRobot extends DreameGen2LidarValetudoRobot {
             siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
             piid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.MOP_DOCK_SETTINGS.PIID
         }));
+
+        this.registerCapability(new capabilities.DreameMopDockCleanManualTriggerCapability({
+            robot: this,
+            siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
+            aiid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.ACTIONS.MOP_DOCK_INTERACT.AIID,
+
+            additionalCleanupParametersPiid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.ADDITIONAL_CLEANUP_PROPERTIES.PIID
+        }));
+
+        this.registerCapability(new capabilities.DreameMopDockDryManualTriggerCapability({
+            robot: this,
+            siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
+            aiid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.ACTIONS.MOP_DOCK_INTERACT.AIID,
+
+            additionalCleanupParametersPiid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.ADDITIONAL_CLEANUP_PROPERTIES.PIID
+        }));
+
+        this.registerCapability(new capabilities.DreameOperationModeControlCapability({
+            robot: this,
+            presets: Object.keys(this.operationModes).map(k => {
+                return new ValetudoSelectionPreset({name: k, value: this.operationModes[k]});
+            }),
+            siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
+            piid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.MOP_DOCK_SETTINGS.PIID
+        }));
+
+
+        this.state.upsertFirstMatchingAttribute(new entities.state.attributes.DockStatusStateAttribute({
+            value: entities.state.attributes.DockStatusStateAttribute.VALUE.IDLE
+        }));
     }
 
     getStatePropertiesToPoll() {
@@ -103,6 +133,10 @@ class DreameMopValetudoRobot extends DreameGen2LidarValetudoRobot {
             {
                 siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
                 piid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.MOP_DOCK_SETTINGS.PIID
+            },
+            {
+                siid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID,
+                piid: DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.MOP_DOCK_STATUS.PIID
             }
         ];
     }
@@ -133,13 +167,6 @@ class DreameMopValetudoRobot extends DreameGen2LidarValetudoRobot {
                             }));
                             break;
                         }
-                        case DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.WATER_TANK_ATTACHMENT.PIID: {
-                            this.state.upsertFirstMatchingAttribute(new entities.state.attributes.AttachmentStateAttribute({
-                                type: entities.state.attributes.AttachmentStateAttribute.TYPE.MOP,
-                                attached: elem.value === 1
-                            }));
-                            break;
-                        }
                     }
                     break;
                 }
@@ -152,14 +179,6 @@ class DreameMopValetudoRobot extends DreameGen2LidarValetudoRobot {
                 !(
                     e.siid === DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID &&
                     e.piid === DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.WATER_USAGE.PIID
-                ) &&
-                !(
-                    e.siid === DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID &&
-                    e.piid === DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.MOP_DOCK_SETTINGS.PIID
-                ) &&
-                !(
-                    e.siid === DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.SIID &&
-                    e.piid === DreameGen2ValetudoRobot.MIOT_SERVICES.VACUUM_2.PROPERTIES.WATER_TANK_ATTACHMENT.PIID
                 )
             );
         }));
