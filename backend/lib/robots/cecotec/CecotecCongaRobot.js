@@ -7,7 +7,6 @@ const ValetudoRobot = require("../../core/ValetudoRobot");
 const {
     BatteryStateAttribute,
     StatusStateAttribute,
-    OperationModeStateAttribute,
     PresetSelectionStateAttribute,
     AttachmentStateAttribute,
 } = require("../../entities/state/attributes");
@@ -283,11 +282,13 @@ module.exports = class CecotecCongaRobot extends ValetudoRobot {
                 attached: robot.device.hasMopAttached,
             })
         );
+        let attr = robot.device.hasMopAttached ?
+            PresetSelectionStateAttribute.MODE.VACUUM_AND_MOP :
+            PresetSelectionStateAttribute.MODE.VACUUM;
         this.state.upsertFirstMatchingAttribute(
-            new OperationModeStateAttribute({
-                value: robot.device.hasMopAttached ?
-                    OperationModeStateAttribute.VALUE.VACUUM_AND_MOP :
-                    OperationModeStateAttribute.VALUE.VACUUM,
+            new PresetSelectionStateAttribute({
+                type: attr,
+                value: attr
             })
         );
 
